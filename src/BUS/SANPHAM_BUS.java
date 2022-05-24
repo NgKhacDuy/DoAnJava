@@ -82,20 +82,27 @@ public class SANPHAM_BUS {
         return false;
     }   
     public boolean suaSanPham(String ma,String ten,String gia, String size, String soluong){
-        int masp=Integer.parseInt(ma);
-        int Dongia=Integer.parseInt(gia);
-        int soLuong=Integer.parseInt(soluong);
-        SANPHAM_DTO sp = new SANPHAM_DTO();
-        sp.setMASP(masp);
-        sp.setTENSP(ten);
-        sp.setGIA(Dongia);
-        sp.setSIZE(size);
-        sp.setSOLUONG(soLuong);
-        if(spDAO.suaSanPham(sp))
-            return true;
-        else{
-            return false;
+        try {
+            int masp=Integer.parseInt(ma);
+            int soLuong=Integer.parseInt(soluong);
+            int DonGia=Integer.parseInt(gia);
+            SANPHAM_DTO sp = new SANPHAM_DTO();
+            sp.setMASP(masp);
+            sp.setTENSP(ten);
+            sp.setGIA(DonGia);
+            sp.setSIZE(size);
+            sp.setSOLUONG(soLuong);
+            if(spDAO.suaSanPham(sp)){
+                return true;
+            }
+            else{
+                return false;
+            }
+        } 
+        
+        catch (Exception e) {
         }
+        return false;
     }
     public String getTenSP(int masp){
         for(SANPHAM_DTO sp: listSP)

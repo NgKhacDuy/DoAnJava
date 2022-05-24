@@ -5,6 +5,9 @@
 package GUI;
 
 import java.awt.Color;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -279,7 +282,13 @@ public class MAIN extends javax.swing.JFrame {
     private void btnSanPhamActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSanPhamActionPerformed
         // TODO add your handling code here:
         DesktopPane.removeAll();
-        DesktopPane.add(new SANPHAM_GUI()).setVisible(true);
+        try {
+            DesktopPane.add(new SANPHAM_GUI()).setVisible(true);
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(MAIN.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(MAIN.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_btnSanPhamActionPerformed
 
     private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed

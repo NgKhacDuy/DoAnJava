@@ -121,8 +121,11 @@ public class SANPHAM_DAO {
             myconnect= new MyConnect();
             Connection con = myconnect.getCon();
             String sql = "UPDATE SANPHAM SET "
-                    +"TEN SP=?,GIA=?,SIZE=?,SOLUONG=?"
-                    +"WHERE MASP = ?";
+                    +"TENSP=?, "
+                    + "GIA=?, "
+                    + "SIZE=?, "
+                    + "SOLUONG=? "
+                    +"WHERE MASP=?";
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setString(1,sp.getTENSP());
             pre.setInt(2, sp.getGIA());
