@@ -35,7 +35,54 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         RB_Them.setSelected(true);
         loadDataLenBangSanPham();
     }
-    
+    private void xulySuaSanPham() throws ClassNotFoundException, SQLException{
+        boolean flag = SP_BUS.suaSanPham(txtMaSP.getText(), txtTenSP.getText(), txtDonGia.getText(), txtSize.getText(), txtSoLuong.getText());
+        SP_BUS.docListSP();
+        if(flag)
+            JOptionPane.showMessageDialog(rootPane, "Sửa thành công");
+        else
+            JOptionPane.showMessageDialog(rootPane, "Sửa thất bại");
+        loadDataLenBangSanPham();
+    }
+    private void xulyXoaSP() throws ClassNotFoundException, SQLException{
+        int response= JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa ?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
+        if(response==JOptionPane.YES_OPTION){
+            boolean flag = SP_BUS.xoaSanPham(txtMaSP.getText());
+            if(flag){
+                JOptionPane.showMessageDialog(rootPane, "Xóa thành công");
+                loadDataLenBangSanPham();
+            }
+        }
+    }
+    private void xulyThemSP(){
+        boolean flag = SP_BUS.themSanPham(txtTenSP.getText(), txtDonGia.getText(), txtSize.getText(), txtSoLuong.getText());
+                try {
+                    SP_BUS.docListSP();
+                    loadDataLenBangSanPham();
+                } catch (ClassNotFoundException ex) {
+                    Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                } catch (SQLException ex) {
+                    Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+                }
+    }
+    private void xuLyClickTblSanPham() {
+        DefaultTableModel dtm =(DefaultTableModel)jtable.getModel();
+        if(jtable.getSelectedRow()>-1){
+            String ma = dtm.getValueAt(jtable.getSelectedRow(), 0) + "";
+            String ten = jtable.getValueAt(jtable.getSelectedRow(), 1) + "";
+            String donGia = jtable.getValueAt(jtable.getSelectedRow(), 2) + "";
+            String size = jtable.getValueAt(jtable.getSelectedRow(), 3) + "";
+            String soLuong = jtable.getValueAt(jtable.getSelectedRow(), 4) + "";
+
+            txtMaSP.setText(ma);
+            txtTenSP.setText(ten);
+            txtDonGia.setText(donGia);
+            txtSoLuong.setText(soLuong);
+            txtSize.setText(size);
+        }
+            
+        
+    }
     private void loadDataLenBangSanPham() throws ClassNotFoundException, SQLException {
         DefaultTableModel dtm = (DefaultTableModel)jtable.getModel();
         SP_BUS.docListSP();
@@ -43,15 +90,14 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
 
         ArrayList<SANPHAM_DTO> dssp = SP_BUS.getListSanPham();
 
-        DecimalFormat dcf = new DecimalFormat("###,###");
 
         for (SANPHAM_DTO sp : dssp) {
             Vector vec = new Vector();
             vec.add(sp.getMASP());
             vec.add(sp.getTENSP());
-            vec.add(dcf.format(sp.getGIA()));
+            vec.add(sp.getGIA());
             vec.add(sp.getSIZE());
-            vec.add(dcf.format(sp.getSOLUONG()));
+            vec.add(sp.getSOLUONG());
             dtm.addRow(vec);
         }
     }
@@ -244,6 +290,11 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         jPanel2.setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane2.setBackground(new java.awt.Color(255, 255, 255));
+        jScrollPane2.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jScrollPane2MouseClicked(evt);
+            }
+        });
 
         jtable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -253,6 +304,11 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
                 "Mã sản phẩm", "Tên sản phẩm", "Giá", "Size", "Số lượng"
             }
         ));
+        jtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtableMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(jtable);
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
@@ -326,17 +382,26 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         if(validateForm()){
             if(RB_Them.isSelected()){
-                boolean flag = SP_BUS.themSanPham(txtTenSP.getText(), txtDonGia.getText(), txtSize.getText(), txtSoLuong.getText());
+                xulyThemSP();
+            }
+            else if(RB_Xoa.isSelected())
                 try {
-                    SP_BUS.docListSP();
-                    loadDataLenBangSanPham();
-                } catch (ClassNotFoundException ex) {
-                    Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
-                } catch (SQLException ex) {
-                    Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
-                }
+                    xulyXoaSP();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            }
+            else 
+                try {
+                    xulySuaSanPham();
+            } catch (ClassNotFoundException ex) {
+                Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+            } catch (SQLException ex) {
+                Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
             }
         }
+         
     }//GEN-LAST:event_btnOKActionPerformed
 
     private void btnHuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyActionPerformed
@@ -346,6 +411,16 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         txtDonGia.setText("");
         txtSize.setText("");
     }//GEN-LAST:event_btnHuyActionPerformed
+
+    private void jScrollPane2MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jScrollPane2MouseClicked
+        // TODO add your handling code here:
+    }//GEN-LAST:event_jScrollPane2MouseClicked
+
+    private void jtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableMouseClicked
+        // TODO add your handling code here:
+                xuLyClickTblSanPham();
+
+    }//GEN-LAST:event_jtableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
