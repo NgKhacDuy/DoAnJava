@@ -45,6 +45,7 @@ public class SANPHAM_DAO {
         }
         return null;
     }
+    
     public SANPHAM_DTO getSanPham(int ma){
         try{
             myconnect= new MyConnect();
@@ -92,6 +93,33 @@ public class SANPHAM_DAO {
         } catch (SQLException e){}
         return false;
     }
+    public ArrayList<SANPHAM_DTO> getTENSP_MASP(String ma, String ten){
+        try {
+            myconnect=new MyConnect();
+            Connection con = myconnect.getCon();
+            String sql="SELECT * FROM SANPHAM "
+                    + "WHERE TENSP LIKE \"?\" "
+                    + "and MASP =\"?\"";
+            PreparedStatement pre=con.prepareStatement(sql);
+            pre.setString(1, ten);
+            pre.setString(2, ma);
+            ResultSet rs= pre.executeQuery();
+            ArrayList<SANPHAM_DTO> dssp = new ArrayList<>();
+            while(rs.next()){
+                SANPHAM_DTO sp = new SANPHAM_DTO();
+                sp.setMASP(rs.getInt(1));
+                sp.setTENSP(rs.getString(2));
+                sp.setGIA(rs.getInt(3));
+                sp.setSIZE(rs.getString(4));
+                sp.setSOLUONG(rs.getInt(5));
+                dssp.add(sp);
+            }
+            return dssp;
+        } catch (SQLException e) {
+            
+        }
+        return null;
+    }
     public boolean nhapSanPhamTuExcel(SANPHAM_DTO sp){
         try{
             String sql = "DELETE * FROM SANPHAM;"+ "INSERT INTO SANPHAM (TENSP,GIA,SIZE,SOLUONG)"+"VALUES (?,?,?,?)";
@@ -137,4 +165,5 @@ public class SANPHAM_DAO {
         } catch (SQLException e){}
         return false;
     }
+    
 }

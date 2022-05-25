@@ -49,6 +49,48 @@ public class SANPHAM_BUS {
         }
         return dssp;
     }
+    public ArrayList<SANPHAM_DTO> getSanPhamTheoMa(String ma){
+        ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+        int masp=Integer.parseInt(ma);
+        for(SANPHAM_DTO sp : listSP){
+            int maSP = sp.getMASP();
+            if(maSP==masp)
+                dssp.add(sp);
+        }
+        return dssp;
+    }
+    public ArrayList<SANPHAM_DTO> getSanPhamTheoGiaMinimum(String gia){
+        ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+        int Gia=Integer.parseInt(gia);
+        for(SANPHAM_DTO sp:listSP){
+            int GiaThapNhat = sp.getGIA();
+            if(GiaThapNhat==Gia)
+                dssp.add(sp);
+        }
+        return dssp;
+    }
+    public ArrayList<SANPHAM_DTO> getSanPhamTheoKhoangGia(String gia_min, String gia_max){
+        ArrayList<SANPHAM_DTO> dssp = new ArrayList<>();
+        int Gia_Min=Integer.parseInt(gia_min);
+        int Gia_Max=Integer.parseInt(gia_max);
+        for(SANPHAM_DTO sp : listSP){
+            int GiaThapNhat=sp.getGIA();
+            int GiaCaoNhat=sp.getGIA();
+            if(GiaThapNhat>=Gia_Min&&GiaCaoNhat<=Gia_Max)
+                dssp.add(sp);
+        }
+        return dssp;
+    }
+    public ArrayList<SANPHAM_DTO> getSanPhamTheoGiaMaximum(String gia){
+        ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+        int Gia=Integer.parseInt(gia);
+        for(SANPHAM_DTO sp:listSP){
+            int GiaCaoNhat = sp.getGIA();
+            if(GiaCaoNhat==Gia)
+                dssp.add(sp);
+        }
+        return dssp;
+    }
     public void capNhatSoLuongSP(int ma, int soLuongMat){
         spDAO.capNhatSoLuongSP(ma, soLuongMat);
     }
@@ -70,6 +112,38 @@ public class SANPHAM_BUS {
         } catch (Exception e) {
         }
         return false;
+    }
+    public ArrayList<SANPHAM_DTO> getSoLuong(String soluong){
+        int soLuong=Integer.parseInt(soluong);
+        ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+        for(SANPHAM_DTO sp : listSP){
+            if(soLuong==sp.getSOLUONG())
+                dssp.add(sp);
+        }
+        return dssp;
+    }
+    public ArrayList<SANPHAM_DTO> getSoLuong_TENSP(String ten,String soluong){
+        int soLuong=Integer.parseInt(soluong);
+        ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+        for(SANPHAM_DTO sp : listSP){
+            if(soLuong==sp.getSOLUONG()&&sp.getTENSP().toLowerCase().contains(ten.toLowerCase()))
+                dssp.add(sp);
+        }
+        return dssp;
+    }
+    public ArrayList<SANPHAM_DTO> getTENSP_SIZE(String size, String ten){
+        
+            
+            ArrayList<SANPHAM_DTO> dssp=new ArrayList<>();
+            for(SANPHAM_DTO sp: listSP){
+                String Size=sp.getSIZE().toLowerCase();
+                String tensp=sp.getTENSP().toLowerCase();
+                if(Size.toLowerCase().contains(size.toLowerCase())&&tensp.toLowerCase().contains(ten.toLowerCase()))
+                    dssp.add(sp);
+            }
+            
+        
+        return dssp;
     }
     public boolean xoaSanPham(String ma){
         if(ma.trim().equals("")){
