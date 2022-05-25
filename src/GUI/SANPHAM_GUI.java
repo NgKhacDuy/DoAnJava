@@ -189,7 +189,7 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     private void xuLyClickTblSanPham() {
         DefaultTableModel dtm =(DefaultTableModel)jtable.getModel();
         if(jtable.getSelectedRow()>-1){
-            String ma = dtm.getValueAt(jtable.getSelectedRow(), 0) + "";
+            String ma = jtable.getValueAt(jtable.getSelectedRow(), 0) + "";
             String ten = jtable.getValueAt(jtable.getSelectedRow(), 1) + "";
             String donGia = jtable.getValueAt(jtable.getSelectedRow(), 2) + "";
             String size = jtable.getValueAt(jtable.getSelectedRow(), 3) + "";
@@ -606,9 +606,10 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 344, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
