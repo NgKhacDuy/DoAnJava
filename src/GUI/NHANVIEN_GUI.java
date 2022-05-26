@@ -6,6 +6,7 @@ package GUI;
 
 import BUS.NHANVIEN_BUS;
 import DTO.NHANVIEN_DTO;
+import java.awt.event.KeyEvent;
 import java.text.ParseException;
 import java.util.Date;
 import java.text.SimpleDateFormat;
@@ -241,13 +242,29 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
             new String [] {
                 "Mã nhân viên", "Tên nhân viên", "Ngày sinh", "Địa chỉ", "Số điện thoại", "Chức vụ", "Ca làm"
             }
-        ));
+        ) {
+            boolean[] canEdit = new boolean [] {
+                false, false, false, false, false, false, false
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
         jTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 jTableMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTable);
+        if (jTable.getColumnModel().getColumnCount() > 0) {
+            jTable.getColumnModel().getColumn(0).setResizable(false);
+            jTable.getColumnModel().getColumn(1).setResizable(false);
+            jTable.getColumnModel().getColumn(2).setResizable(false);
+            jTable.getColumnModel().getColumn(3).setResizable(false);
+            jTable.getColumnModel().getColumn(4).setResizable(false);
+            jTable.getColumnModel().getColumn(5).setResizable(false);
+        }
 
         RB_Them.setBackground(new java.awt.Color(255, 204, 0));
         buttonGroup1.add(RB_Them);
@@ -300,6 +317,11 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         txtDiaCHi.setLabelText("ĐỊA CHỈ");
 
         txtSDT.setLabelText("SỐ ĐIỆN THOẠI");
+        txtSDT.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyTyped(java.awt.event.KeyEvent evt) {
+                txtSDTKeyTyped(evt);
+            }
+        });
 
         txtChucVu.setLabelText("CHỨC VỤ");
 
@@ -490,6 +512,13 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         txtChucVu.setText("");
         txtCaLam.setText("");
     }//GEN-LAST:event_btn_HuyActionPerformed
+
+    private void txtSDTKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSDTKeyTyped
+        // TODO add your handling code here:
+        char c = evt.getKeyChar();
+        if(!((Character.isDigit(c))||(c==KeyEvent.VK_BACK_SPACE)||c==KeyEvent.VK_DELETE))
+            evt.consume();
+    }//GEN-LAST:event_txtSDTKeyTyped
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

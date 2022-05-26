@@ -306,6 +306,11 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         });
 
         txtSoLuong.setLabelText("Số lượng");
+        txtSoLuong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtSoLuongActionPerformed(evt);
+            }
+        });
         txtSoLuong.addKeyListener(new java.awt.event.KeyAdapter() {
             public void keyTyped(java.awt.event.KeyEvent evt) {
                 txtSoLuongKeyTyped(evt);
@@ -646,8 +651,11 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     private void txtSizeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSizeKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if(!((c==KeyEvent.VK_L)||(c==KeyEvent.VK_S)||(c==KeyEvent.VK_M)||((c==KeyEvent.VK_BACK_SPACE)||c==KeyEvent.VK_DELETE)))
-            evt.consume();
+        if(c<=1)
+            if(!((c==KeyEvent.VK_L)||(c==KeyEvent.VK_S)||(c==KeyEvent.VK_M)||((c==KeyEvent.VK_BACK_SPACE)||c==KeyEvent.VK_DELETE)))
+                evt.consume();
+        else
+                evt.consume();
     }//GEN-LAST:event_txtSizeKeyTyped
 
     private void txtDonGiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDonGiaKeyTyped
@@ -778,6 +786,10 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     private void txtDonGiaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtDonGiaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtDonGiaActionPerformed
+
+    private void txtSoLuongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSoLuongActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_txtSoLuongActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

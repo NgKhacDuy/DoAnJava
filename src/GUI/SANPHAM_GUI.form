@@ -223,6 +223,7 @@
             <Property name="labelText" type="java.lang.String" value="S&#x1ed1; l&#x1b0;&#x1ee3;ng"/>
           </Properties>
           <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtSoLuongActionPerformed"/>
             <EventHandler event="keyTyped" listener="java.awt.event.KeyListener" parameters="java.awt.event.KeyEvent" handler="txtSoLuongKeyTyped"/>
           </Events>
         </Component>

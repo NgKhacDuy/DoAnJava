@@ -8,16 +8,16 @@ package DTO;
  *
  * @author HP
  */
-public class KHACHHANG {
+public class KHACHHANG_DTO {
 public int MAKH;
-public String TEN;
-public int SDT;
+public String TENKH;
+public String SDT;
 
-public KHACHHANG(){
+public KHACHHANG_DTO(){
 }
-public KHACHHANG(int MAKH, String TEN, int SDT){
+public KHACHHANG_DTO(int MAKH, String TENKH, String SDT){
     this.MAKH= MAKH;
-    this.TEN= TEN;
+    this.TENKH= TENKH;
     this.SDT= SDT;
 }
 public int getMAKH(){
@@ -26,16 +26,16 @@ public int getMAKH(){
 public void setMAKH(int MAKH){
     this.MAKH=MAKH;
 }
-public String getTEN(){
-    return TEN;
+public String getTENKH(){
+    return TENKH;
 }
-public void setTEN(String TEN){
-    this.TEN= TEN;
+public void setTENKH(String TENKH){
+    this.TENKH= TENKH;
 }
-public int getSDT(){
+public String getSDT(){
     return SDT;
 }
-public void setSDT(int SDT){
+public void setSDT(String SDT){
     this.SDT= SDT;
 }
 }
