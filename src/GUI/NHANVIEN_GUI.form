@@ -5,6 +5,11 @@
     <Component class="javax.swing.ButtonGroup" name="buttonGroup1">
     </Component>
   </NonVisualComponents>
+  <Properties>
+    <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+      <Color blue="ff" green="ff" red="ff" type="rgb"/>
+    </Property>
+  </Properties>
   <SyntheticProperties>
     <SyntheticProperty name="formSizePolicy" type="int" value="1"/>
   </SyntheticProperties>
@@ -23,8 +28,8 @@
   <Layout>
     <DimensionLayout dim="0">
       <Group type="103" groupAlignment="0" attributes="0">
-          <Component id="jScrollPane1" alignment="1" max="32767" attributes="0"/>
-          <Group type="102" alignment="0" attributes="0">
+          <Component id="jScrollPane1" max="32767" attributes="0"/>
+          <Group type="102" attributes="0">
               <EmptySpace min="-2" pref="94" max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" max="-2" attributes="0">
                   <Component id="txtTenNV" alignment="0" pref="120" max="32767" attributes="0"/>
@@ -50,7 +55,7 @@
                       <Component id="btn_OK" min="-2" pref="82" max="-2" attributes="0"/>
                   </Group>
               </Group>
-              <EmptySpace pref="67" max="32767" attributes="0"/>
+              <EmptySpace pref="77" max="32767" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
                   <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
                   <Component id="panel1" min="-2" max="-2" attributes="0"/>
@@ -105,7 +110,7 @@
                   <Component id="panel1" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="separate" max="-2" attributes="0"/>
-              <Component id="jScrollPane1" pref="243" max="32767" attributes="0"/>
+              <Component id="jScrollPane1" pref="256" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -239,10 +244,16 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="H&#x1ee6;Y"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btn_HuyActionPerformed"/>
+      </Events>
     </Component>
     <Component class="Custom.TextField" name="txtMaNV">
       <Properties>
         <Property name="editable" type="boolean" value="false"/>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="labelText" type="java.lang.String" value="M&#xc3; NH&#xc2;N VI&#xca;N"/>
       </Properties>
     </Component>
@@ -276,6 +287,9 @@
     </Component>
     <Container class="Custom.Panel" name="panel1">
       <Properties>
+        <Property name="background" type="java.awt.Color" editor="org.netbeans.beaninfo.editors.ColorEditor">
+          <Color blue="ff" green="ff" red="ff" type="rgb"/>
+        </Property>
         <Property name="border" type="javax.swing.border.Border" editor="org.netbeans.modules.form.editors2.BorderEditor">
           <Border info="org.netbeans.modules.form.compat2.border.LineBorderInfo">
             <LineBorder/>
@@ -291,7 +305,7 @@
                   <Group type="103" groupAlignment="0" attributes="0">
                       <Group type="102" attributes="0">
                           <EmptySpace min="0" pref="73" max="32767" attributes="0"/>
-                          <Component id="button1" min="-2" max="-2" attributes="0"/>
+                          <Component id="btnHuyTimKiem" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="39" max="-2" attributes="0"/>
                           <Component id="button2" min="-2" max="-2" attributes="0"/>
                           <EmptySpace min="-2" pref="78" max="-2" attributes="0"/>
@@ -316,7 +330,7 @@
                   <Component id="txtTimTheoTen" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="separate" max="-2" attributes="0"/>
                   <Group type="103" groupAlignment="3" attributes="0">
-                      <Component id="button1" alignment="3" min="-2" max="-2" attributes="0"/>
+                      <Component id="btnHuyTimKiem" alignment="3" min="-2" max="-2" attributes="0"/>
                       <Component id="button2" alignment="3" min="-2" max="-2" attributes="0"/>
                   </Group>
                   <EmptySpace max="-2" attributes="0"/>
@@ -335,12 +349,12 @@
             <Property name="labelText" type="java.lang.String" value="T&#xcc;M THEO T&#xca;N"/>
           </Properties>
         </Component>
-        <Component class="Custom.Button" name="button1">
+        <Component class="Custom.Button" name="btnHuyTimKiem">
           <Properties>
             <Property name="text" type="java.lang.String" value="H&#x1ee7;y"/>
           </Properties>
           <Events>
-            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="button1ActionPerformed"/>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnHuyTimKiemActionPerformed"/>
           </Events>
         </Component>
         <Component class="Custom.Button" name="button2">

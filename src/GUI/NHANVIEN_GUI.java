@@ -34,6 +34,71 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         RB_Them.setSelected(true);
         loadDatalenTable();
     }
+    private void timKiemTongHop(){
+            String ma=txt_TimTheoMa.getText();
+            String ten=txt_NgaySinh.getText();
+            DefaultTableModel dtm = (DefaultTableModel)jTable.getModel();
+            dtm.setRowCount(0);
+            ArrayList<NHANVIEN_DTO>dsnv=null;
+            dsnv=nv_BUS.getNVTongHop(ma, ten);
+            for(NHANVIEN_DTO nv :dsnv){
+                Vector vec = new Vector();
+                vec.add(nv.getMANV());
+                vec.add(nv.getTENNV());
+                vec.add(nv.getNGAYSINH());
+                vec.add(nv.getDIACHI());
+                vec.add(nv.getSDT());
+                vec.add(nv.getCHUCVU());
+                vec.add(nv.getCALAM());
+                dtm.addRow(vec);
+            }
+    }
+    private void timKiemTheoMa(){
+        if(txt_TimTheoMa.getText().isEmpty()){
+            loadDatalenTable();
+        }
+        else{
+            String ma=txt_TimTheoMa.getText();
+            DefaultTableModel dtm = (DefaultTableModel)jTable.getModel();
+            dtm.setRowCount(0);
+            ArrayList<NHANVIEN_DTO>dsnv=null;
+            dsnv=nv_BUS.getNVTheoMa(ma);
+            for(NHANVIEN_DTO nv :dsnv){
+                Vector vec = new Vector();
+                vec.add(nv.getMANV());
+                vec.add(nv.getTENNV());
+                vec.add(nv.getNGAYSINH());
+                vec.add(nv.getDIACHI());
+                vec.add(nv.getSDT());
+                vec.add(nv.getCHUCVU());
+                vec.add(nv.getCALAM());
+                dtm.addRow(vec);
+            }
+        }
+    }
+    private void timKiemTheoTen(){
+        if(txtTimTheoTen.getText().isEmpty()){
+            loadDatalenTable();
+        }
+        else{
+            String ten=txtTimTheoTen.getText();
+            DefaultTableModel dtm = (DefaultTableModel)jTable.getModel();
+            dtm.setRowCount(0);
+            ArrayList<NHANVIEN_DTO>dsnv=null;
+            dsnv=nv_BUS.getNVTheoTen(ten);
+            for(NHANVIEN_DTO nv :dsnv){
+                Vector vec = new Vector();
+                vec.add(nv.getMANV());
+                vec.add(nv.getTENNV());
+                vec.add(nv.getNGAYSINH());
+                vec.add(nv.getDIACHI());
+                vec.add(nv.getSDT());
+                vec.add(nv.getCHUCVU());
+                vec.add(nv.getCALAM());
+                dtm.addRow(vec);
+            }
+        }
+    }
     private void xulyXoaNV(){
         int response= JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa ?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
         if(response==JOptionPane.YES_OPTION){
@@ -138,9 +203,11 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         panel1 = new Custom.Panel();
         txt_TimTheoMa = new Custom.TextField();
         txtTimTheoTen = new Custom.TextField();
-        button1 = new Custom.Button();
+        btnHuyTimKiem = new Custom.Button();
         button2 = new Custom.Button();
         txt_NgaySinh = new Custom.TextField();
+
+        setBackground(new java.awt.Color(255, 255, 255));
 
         jScrollPane1.setBackground(new java.awt.Color(255, 255, 255));
 
@@ -200,8 +267,14 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         RB_Sua.setText("SỬA");
 
         btn_Huy.setText("HỦY");
+        btn_Huy.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_HuyActionPerformed(evt);
+            }
+        });
 
         txtMaNV.setEditable(false);
+        txtMaNV.setBackground(new java.awt.Color(255, 255, 255));
         txtMaNV.setLabelText("MÃ NHÂN VIÊN");
 
         btn_OK.setText("OK");
@@ -219,16 +292,17 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
 
         txtChucVu.setLabelText("CHỨC VỤ");
 
+        panel1.setBackground(new java.awt.Color(255, 255, 255));
         panel1.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
 
         txt_TimTheoMa.setLabelText("TÌM THEO MÃ");
 
         txtTimTheoTen.setLabelText("TÌM THEO TÊN");
 
-        button1.setText("Hủy");
-        button1.addActionListener(new java.awt.event.ActionListener() {
+        btnHuyTimKiem.setText("Hủy");
+        btnHuyTimKiem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                button1ActionPerformed(evt);
+                btnHuyTimKiemActionPerformed(evt);
             }
         });
 
@@ -248,7 +322,7 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(panel1Layout.createSequentialGroup()
                         .addGap(0, 73, Short.MAX_VALUE)
-                        .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(btnHuyTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(39, 39, 39)
                         .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(78, 78, 78))
@@ -267,7 +341,7 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
                 .addComponent(txtTimTheoTen, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addGroup(panel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnHuyTimKiem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap())
         );
@@ -278,7 +352,7 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
+            .addComponent(jScrollPane1)
             .addGroup(layout.createSequentialGroup()
                 .addGap(94, 94, 94)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
@@ -301,7 +375,7 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
                         .addComponent(btn_Huy, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, 82, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 67, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 77, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
                     .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -343,7 +417,7 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
                                     .addComponent(btn_OK, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 243, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 256, Short.MAX_VALUE))
         );
 
         pack();
@@ -369,15 +443,24 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtCaLamActionPerformed
 
-    private void button1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button1ActionPerformed
+    private void btnHuyTimKiemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHuyTimKiemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_button1ActionPerformed
+        txtTimTheoTen.setText("");
+        txt_TimTheoMa.setText("");
+        loadDatalenTable();
+    }//GEN-LAST:event_btnHuyTimKiemActionPerformed
 
     private void button2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_button2ActionPerformed
         // TODO add your handling code here:
-        if(txtTimTheoTen.getText().isEmpty()||txt_TimTheoMa.getText().isEmpty())
-            JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập đầy đủ thông tin để tìm kiếm0");
-//        else
+        if(txtTimTheoTen.getText().isEmpty()&&txt_TimTheoMa.getText().isEmpty())
+            JOptionPane.showMessageDialog(rootPane, "Vui lòng nhập đầy đủ thông tin để tìm kiếm");
+        else if(!txtTimTheoTen.getText().isEmpty()&&txt_TimTheoMa.getText().isEmpty())
+            timKiemTheoTen();
+        else if(txtTimTheoTen.getText().isEmpty()&&!txt_TimTheoMa.getText().isEmpty())
+            timKiemTheoMa();
+        else if(!txtTimTheoTen.getText().isEmpty()&&!txt_TimTheoMa.getText().isEmpty())
+            timKiemTongHop();
+            
             
     }//GEN-LAST:event_button2ActionPerformed
 
@@ -386,14 +469,25 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         xulyClickTable();
     }//GEN-LAST:event_jTableMouseClicked
 
+    private void btn_HuyActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_HuyActionPerformed
+        // TODO add your handling code here:
+        txtMaNV.setText("");
+        txtTenNV.setText("");
+        txt_NgaySinh.setText("");
+        txtDiaCHi.setText("");
+        txtSDT.setText("");
+        txtChucVu.setText("");
+        txtCaLam.setText("");
+    }//GEN-LAST:event_btn_HuyActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JRadioButton RB_Sua;
     private javax.swing.JRadioButton RB_Them;
     private javax.swing.JRadioButton RB_XOa;
+    private Custom.Button btnHuyTimKiem;
     private Custom.Button btn_Huy;
     private Custom.Button btn_OK;
-    private Custom.Button button1;
     private Custom.Button button2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;

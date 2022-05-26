@@ -32,6 +32,17 @@ public class NHANVIEN_BUS {
             docListNV();
         return listnv;
     }
+    public ArrayList<NHANVIEN_DTO>getNVTongHop(String ma, String ten){
+        ArrayList<NHANVIEN_DTO>dsnv=new ArrayList<>();
+        int manv=Integer.parseInt(ma);
+        for(NHANVIEN_DTO nv:listnv){
+            String tenNV=nv.getTENNV().toLowerCase();
+            int maNV=nv.getMANV();
+            if(tenNV.toLowerCase().contains(ten.toLowerCase())&&maNV==manv)
+                dsnv.add(nv);
+        }
+        return dsnv;
+    }
     public ArrayList<NHANVIEN_DTO>getNVTheoTen(String ten){
         ArrayList<NHANVIEN_DTO>dsnv=new ArrayList<>();
         for(NHANVIEN_DTO nv: listnv){
