@@ -23,6 +23,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
     NHANVIEN_BUS nv_BUS=new NHANVIEN_BUS();
+    String regex_Time="([01]?[0-9]|2[0-3]):[0-5][0-9]";
     String regex = "^(3[01]|[12][0-9]|0[1-9])/(1[0-2]|0[1-9])/[0-9]{4}$";
     /**
      * Creates new form NHANVIEN__GUI
@@ -154,9 +155,19 @@ public class NHANVIEN_GUI extends javax.swing.JInternalFrame {
         else
             return true;
     }
+    public boolean validateTimeFormat(){
+        Pattern pattern=Pattern.compile(regex_Time);
+        Matcher matcher = pattern.matcher(txtCaLam.getText());
+        if(!matcher.matches()){
+            JOptionPane.showMessageDialog(rootPane, "Định dạng giờ sai (hh::mm)");
+            return false;
+        }
+        else
+            return true;
+    }
     public boolean validateForm(){
         if(!(txtTenNV.getText().isEmpty()||txtDiaCHi.getText().isEmpty()||txt_NgaySinh.getText().isEmpty()||txtChucVu.getText().isEmpty()||txtSDT.getText().isEmpty()||txtCaLam.getText().isEmpty())){
-            if(validateDateFormat())
+            if(validateDateFormat()&&validateTimeFormat())
                 return true;
         }
         else 
