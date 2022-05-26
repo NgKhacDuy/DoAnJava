@@ -107,6 +107,11 @@ public class MAIN extends javax.swing.JFrame {
         btnQLNV.setText("NHÂN VIÊN");
         btnQLNV.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         btnQLNV.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnQLNV.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnQLNVActionPerformed(evt);
+            }
+        });
 
         btnKhuyenMai.setBackground(new java.awt.Color(255, 255, 255));
         btnKhuyenMai.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_lease_36px.png"))); // NOI18N
@@ -361,6 +366,12 @@ public class MAIN extends javax.swing.JFrame {
         // TODO add your handling code here:
         PopupMenu.show(btnSanPham, x, y-25);
     }//GEN-LAST:event_jLabel1MouseClicked
+
+    private void btnQLNVActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLNVActionPerformed
+        // TODO add your handling code here:
+        DesktopPane.removeAll();
+        DesktopPane.add(new NHANVIEN_GUI()).setVisible(true);
+    }//GEN-LAST:event_btnQLNVActionPerformed
 
     /**
      * @param args the command line arguments

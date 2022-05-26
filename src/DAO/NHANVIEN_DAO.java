@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.Date;
 
 /**
  *
@@ -48,7 +49,7 @@ public class NHANVIEN_DAO {
             String sql="INSERT INTO NHANVIEN(TENNV,NGAYSINH,DIACHI,SDT,CHUCVU,CALAM)"+"VALUES(?,?,?,?,?,?)";
             PreparedStatement pre=con.prepareStatement(sql);
             pre.setString(1, nv.getTENNV());
-            pre.setString(2,nv.getNGAYSINH());
+            pre.setString(2, nv.getNGAYSINH());
             pre.setString(3,nv.getDIACHI());
             pre.setString(4,nv.getSDT());
             pre.setString(5,nv.getCHUCVU());
@@ -56,6 +57,44 @@ public class NHANVIEN_DAO {
             pre.execute();
             return true;
         } catch (SQLException e) {
+        }
+        return false;
+    }
+    public boolean xoaNV(int maNV){
+        try{
+            myconnect=new MyConnect();
+            Connection con = myconnect.getCon();
+            String sql = "DELETE FROM NHANVIEN WHERE MANV ="+maNV;
+            Statement st=con.createStatement();
+            st.execute(sql);
+            return true;
+        }
+        catch(SQLException e){}
+        return false;
+    }
+    public boolean suaNV(NHANVIEN_DTO nv){
+        try {
+            myconnect=new MyConnect();
+            Connection con = myconnect.getCon();
+            String sql="UPDATE NHANVIEN SET "
+                    +"TENNV=?, "
+                    +"NGAYSINH=?, "
+                    +"DIACHI=?, "
+                    +"SDT=?, "
+                    +"CHUCVU=?, "
+                    +"CALAM=? "
+                    +"WHERE MANV=?";
+            PreparedStatement pre=con.prepareStatement(sql);
+            pre.setString(1, nv.getTENNV());
+            pre.setString(2, nv.getNGAYSINH());
+            pre.setString(3, nv.getDIACHI());
+            pre.setString(4,nv.getSDT());
+            pre.setString(5, nv.getCHUCVU());
+            pre.setString(6, nv.getCALAM());
+            pre.setInt(7, nv.getMANV());
+            pre.execute();
+            return true;
+        } catch (Exception e) {
         }
         return false;
     }

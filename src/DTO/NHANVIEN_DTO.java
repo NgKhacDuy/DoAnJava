@@ -1,5 +1,6 @@
 package DTO;
 
+
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
@@ -17,9 +18,6 @@ public class NHANVIEN_DTO {
     public String SDT;
     public String CHUCVU;
     public String CALAM;
-
-    public NHANVIEN_DTO() {
-    }
 
     public NHANVIEN_DTO(int MANV, String TENNV, String NGAYSINH, String DIACHI, String SDT, String CHUCVU, String CALAM) {
         this.MANV = MANV;
@@ -86,6 +84,13 @@ public class NHANVIEN_DTO {
     public void setCALAM(String CALAM) {
         this.CALAM = CALAM;
     }
+
+    public NHANVIEN_DTO() {
+    }
+
+    
+
+    
 
     
     
