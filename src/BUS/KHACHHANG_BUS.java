@@ -26,7 +26,7 @@ public class KHACHHANG_BUS {
             docListKH();
         return listkh;
     }
-    public ArrayList<KHACHHANG_DTO> getNVTheoTen(String ten){
+    public ArrayList<KHACHHANG_DTO> getKHTheoTen(String ten){
         ArrayList<KHACHHANG_DTO> dskh=new ArrayList<>();
         for(KHACHHANG_DTO kh : listkh){
             String tenkh=kh.getTENKH().toLowerCase();
@@ -35,7 +35,7 @@ public class KHACHHANG_BUS {
         }
         return dskh;
     }
-    public ArrayList<KHACHHANG_DTO> getNVTheoMa(String ma){
+    public ArrayList<KHACHHANG_DTO> getKHTheoMa(String ma){
         ArrayList<KHACHHANG_DTO> dskh=new ArrayList<>();
         int maKH=Integer.parseInt(ma);
         for(KHACHHANG_DTO kh : listkh){
@@ -45,10 +45,11 @@ public class KHACHHANG_BUS {
         }
         return dskh;
     }
-    public boolean themNV(String ten){
+    public boolean themKH(String ten,String sdt){
         try {
             KHACHHANG_DTO kh=new KHACHHANG_DTO();
             kh.setTENKH(ten);
+            kh.setSDT(sdt);
             if(kh_DAO.themNV(kh))
                 return true;
             else
@@ -57,7 +58,7 @@ public class KHACHHANG_BUS {
         }
         return false;
     }
-    public boolean xoaLoai(String ma){
+    public boolean xoaKH(String ma){
         if(ma.trim().equals("")){
             return false;
         }
@@ -67,12 +68,13 @@ public class KHACHHANG_BUS {
         }
         return false;
     }   
-    public boolean suaLoai(String ma,String ten){
+    public boolean suaKH(String ma,String ten,String sdt){
         try {
             int manv=Integer.parseInt(ma);
             KHACHHANG_DTO kh = new KHACHHANG_DTO();
             kh.setMAKH(manv);
             kh.setTENKH(ten);
+            kh.setSDT(sdt);
             if(kh_DAO.suaNV(kh)){
                 return true;
             }

@@ -3,19 +3,40 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JInternalFrame.java to edit this template
  */
 package GUI;
-
+import java.sql.Statement;
+import java.sql.ResultSet;
+import static DAO.MyConnect.conn;
+import java.sql.Connection;
 import BUS.SANPHAM_BUS;
+import Custom.XuLyFileExcel;
+import DAO.MyConnect;
+import java.io.IOException;
 import java.awt.event.KeyEvent;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Vector;
 import DTO.SANPHAM_DTO;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import org.apache.poi.hssf.usermodel.HSSFRow;
+import org.apache.poi.hssf.usermodel.HSSFSheet;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.openxmlformats.schemas.spreadsheetml.x2006.main.WorkbookDocument;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 
 
 
@@ -25,6 +46,8 @@ import javax.swing.table.DefaultTableModel;
  */
 public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     SANPHAM_BUS SP_BUS = new SANPHAM_BUS();
+    private MyConnect myconnect;
+//    String [] column=new String[]{"Mã sản ohẩm","Tên sản phẩm","Giá","Size","Số lượng"};
 
     /**
      * Creates new form SANPHAM_GUI
@@ -36,6 +59,43 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         RB_Them.setSelected(true);
         Panel_advance_searching.setVisible(false);
         loadDataLenBangSanPham();
+    }
+    public void ExportExcel() throws SQLException, FileNotFoundException, IOException{
+        myconnect=new MyConnect();
+        Connection con = myconnect.getCon();
+        Statement st = con.createStatement();
+        ResultSet rs=st.executeQuery("SELECT * FROM SANPHAM");
+        HSSFWorkbook wb = new HSSFWorkbook();
+        HSSFSheet sheet = wb.createSheet("Excel sheet");
+        HSSFRow rowhead =sheet.createRow((short)0);
+        rowhead.createCell((short)0).setCellValue("Mã sản phẩm");
+        rowhead.createCell((short)1).setCellValue("Tên sản phẩm");
+        rowhead.createCell((short)2).setCellValue("Giá sản phẩm");
+        rowhead.createCell((short)3).setCellValue("Size sản phẩm");
+        rowhead.createCell((short)4).setCellValue("Số lượng sản phẩm");
+        int index=1;
+        while(rs.next()){
+            HSSFRow row = sheet.createRow((short)index);
+            row.createCell((short)0).setCellValue(rs.getInt(1));
+            row.createCell((short)1).setCellValue(rs.getString(2));
+            row.createCell((short)2).setCellValue(rs.getInt(3));
+            row.createCell((short)3).setCellValue(rs.getString(4));
+            row.createCell((short)4).setCellValue(rs.getString(5));
+            index++;
+        }
+        JFileChooser filechooser = new JFileChooser();
+        filechooser.showSaveDialog(this);
+        File saveFile=filechooser.getSelectedFile();
+        FileOutputStream fileOut = new FileOutputStream(new File(saveFile.toString()+".xlsx"));
+        wb.write(fileOut);
+        fileOut.close();
+    }
+    public void openFile(String file){
+        try {
+            File path = new File(file);
+            Desktop.getDesktop().open(path);
+        } catch (Exception e) {
+        }
     }
     private void timKiemGiaTheoKhoang(){
         String gia_min=txt_Minium_Gia.getText();
@@ -265,7 +325,7 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         jPanel2 = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jtable = new javax.swing.JTable();
-        jLabel2 = new javax.swing.JLabel();
+        btn_In = new Custom.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
         setBorder(null);
@@ -467,7 +527,7 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addGap(18, 18, 18)
                         .addComponent(txt_LocTheoSoLuong, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(168, Short.MAX_VALUE))
+                .addContainerGap(196, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_advance_searchingLayout.createSequentialGroup()
                 .addGap(0, 0, Short.MAX_VALUE)
                 .addComponent(label_exit_advance_searching))
@@ -617,16 +677,21 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
                 .addContainerGap())
         );
 
-        jLabel2.setBackground(new java.awt.Color(255, 255, 255));
-        jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/coffee_background.jpg"))); // NOI18N
+        btn_In.setText("IN ");
+        btn_In.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_InActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel2)
-                .addGap(0, 0, 0)
+                .addGap(25, 25, 25)
+                .addComponent(btn_In, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(50, 50, 50)
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addComponent(jPanel2, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
@@ -635,9 +700,10 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(jLabel2)))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(btn_In, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)))
                 .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -651,11 +717,10 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     private void txtSizeKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtSizeKeyTyped
         // TODO add your handling code here:
         char c = evt.getKeyChar();
-        if(c<=1)
             if(!((c==KeyEvent.VK_L)||(c==KeyEvent.VK_S)||(c==KeyEvent.VK_M)||((c==KeyEvent.VK_BACK_SPACE)||c==KeyEvent.VK_DELETE)))
-                evt.consume();
-        else
-                evt.consume();
+                if(c>2)
+                    evt.consume();
+            
     }//GEN-LAST:event_txtSizeKeyTyped
 
     private void txtDonGiaKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtDonGiaKeyTyped
@@ -791,6 +856,18 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSoLuongActionPerformed
 
+    private void btn_InActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_InActionPerformed
+        try {
+            // TODO add your handling code here:
+            ExportExcel();
+        } catch (SQLException ex) {
+            Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IOException ex) {
+            Logger.getLogger(SANPHAM_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_btn_InActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_advance_searching;
@@ -801,10 +878,10 @@ public class SANPHAM_GUI extends javax.swing.JInternalFrame {
     private Custom.Button btnOK;
     private Custom.Button btnTimKiem;
     private Custom.Button btnTroLai_TimKiem;
+    private Custom.Button btn_In;
     private javax.swing.JLabel btn_show_advance_searching;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;

@@ -35,6 +35,8 @@ public class MAIN extends javax.swing.JFrame {
 
         PopupMenu = new javax.swing.JPopupMenu();
         MenuItem = new javax.swing.JMenuItem();
+        PopupMenu2 = new javax.swing.JPopupMenu();
+        MenuItem2 = new javax.swing.JMenuItem();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         btnSanPham = new javax.swing.JButton();
@@ -45,6 +47,7 @@ public class MAIN extends javax.swing.JFrame {
         btnGopY = new javax.swing.JButton();
         btnNCC = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         label_header = new javax.swing.JPanel();
         label_exit_app = new javax.swing.JLabel();
@@ -57,6 +60,14 @@ public class MAIN extends javax.swing.JFrame {
             }
         });
         PopupMenu.add(MenuItem);
+
+        MenuItem2.setText("Khách hàng");
+        MenuItem2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                MenuItem2ActionPerformed(evt);
+            }
+        });
+        PopupMenu2.add(MenuItem2);
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setUndecorated(true);
@@ -153,13 +164,19 @@ public class MAIN extends javax.swing.JFrame {
             }
         });
 
+        jLabel3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Img/icons8_more_than_16px_1.png"))); // NOI18N
+        jLabel3.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel3MouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
         jPanel2Layout.setHorizontalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(btnHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnThongKe, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(btnQLNV, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnKhuyenMai, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnGopY, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(btnNCC, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -167,6 +184,10 @@ public class MAIN extends javax.swing.JFrame {
                 .addComponent(btnSanPham)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(jPanel2Layout.createSequentialGroup()
+                .addComponent(btnQLNV)
+                .addGap(1, 1, 1)
+                .addComponent(jLabel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +200,11 @@ public class MAIN extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addComponent(btnThongKe)
                 .addGap(18, 18, 18)
-                .addComponent(btnQLNV)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(btnQLNV)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addGap(8, 8, 8)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addGap(18, 18, 18)
                 .addComponent(btnKhuyenMai)
                 .addGap(18, 18, 18)
@@ -373,6 +398,17 @@ public class MAIN extends javax.swing.JFrame {
         DesktopPane.add(new NHANVIEN_GUI()).setVisible(true);
     }//GEN-LAST:event_btnQLNVActionPerformed
 
+    private void MenuItem2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_MenuItem2ActionPerformed
+        // TODO add your handling code here:
+        DesktopPane.removeAll();
+        DesktopPane.add(new KHACHHANG_GUI()).setVisible(true);
+    }//GEN-LAST:event_MenuItem2ActionPerformed
+
+    private void jLabel3MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel3MouseClicked
+        // TODO add your handling code here:
+        PopupMenu2.show(btnQLNV, x, y-25);
+    }//GEN-LAST:event_jLabel3MouseClicked
+
     /**
      * @param args the command line arguments
      */
@@ -413,17 +449,29 @@ public class MAIN extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane DesktopPane;
     private javax.swing.JMenuItem MenuItem;
+    private javax.swing.JMenuItem MenuItem2;
     private javax.swing.JPopupMenu PopupMenu;
+    private javax.swing.JPopupMenu PopupMenu2;
     private javax.swing.JButton btnGopY;
+    private javax.swing.JButton btnGopY1;
     private javax.swing.JButton btnHoaDon;
+    private javax.swing.JButton btnHoaDon1;
     private javax.swing.JButton btnKhuyenMai;
+    private javax.swing.JButton btnKhuyenMai1;
     private javax.swing.JButton btnNCC;
+    private javax.swing.JButton btnNCC1;
     private javax.swing.JButton btnQLNV;
+    private javax.swing.JButton btnQLNV1;
     private javax.swing.JButton btnSanPham;
+    private javax.swing.JButton btnSanPham1;
     private javax.swing.JButton btnThongKe;
+    private javax.swing.JButton btnThongKe1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JPanel jPanel3;
     private javax.swing.JSeparator jSeparator1;
     private javax.swing.JLabel label_exit_app;
     private javax.swing.JPanel label_header;
