@@ -120,19 +120,7 @@ public class SANPHAM_DAO {
         }
         return null;
     }
-    public boolean nhapSanPhamTuExcel(SANPHAM_DTO sp){
-        try{
-            String sql = "DELETE * FROM SANPHAM;"+ "INSERT INTO SANPHAM (TENSP,GIA,SIZE,SOLUONG)"+"VALUES (?,?,?,?)";
-            PreparedStatement pre = MyConnect.conn.prepareStatement(sql);
-            pre.setString(1, sp.getTENSP());
-            pre.setInt(2, sp.getGIA());
-            pre.setString(3, sp.getSIZE());
-            pre.setInt(4, sp.getSOLUONG());
-            pre.execute();
-            return true;
-        } catch (SQLException e){}
-        return false;
-    }
+    
     public boolean xoaSanPham(int maSP){
         try{
             myconnect= new MyConnect();

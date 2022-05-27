@@ -4,6 +4,9 @@
  */
 package DTO;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 /**
  *
  * @author DELL
@@ -14,6 +17,24 @@ public class CTHD_DTO {
     int soluong;
     int dongia;
     int thanhtien;
+    Date ngaylap;
+
+    public CTHD_DTO(int mahd, int masp, int soluong, int dongia, int thanhtien, Date ngaylap) {
+        this.mahd = mahd;
+        this.masp = masp;
+        this.soluong = soluong;
+        this.dongia = dongia;
+        this.thanhtien = thanhtien;
+        this.ngaylap = ngaylap;
+    }
+
+    public Date getNgaylap() {
+        return ngaylap;
+    }
+
+    public void setNgaylap(Date ngaylap) {
+        this.ngaylap = ngaylap;
+    }
 
     public int getMahd() {
         return mahd;
@@ -58,11 +79,5 @@ public class CTHD_DTO {
     public CTHD_DTO() {
     }
 
-    public CTHD_DTO(int mahd, int masp, int soluong, int dongia, int thanhtien) {
-        this.mahd = mahd;
-        this.masp = masp;
-        this.soluong = soluong;
-        this.dongia = dongia;
-        this.thanhtien = thanhtien;
-    }
+    
 }

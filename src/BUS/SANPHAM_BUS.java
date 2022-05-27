@@ -91,9 +91,7 @@ public class SANPHAM_BUS {
         }
         return dssp;
     }
-    public void capNhatSoLuongSP(int ma, int soLuongMat){
-        spDAO.capNhatSoLuongSP(ma, soLuongMat);
-    }
+    
     public boolean themSanPham(String tensp,String gia, String size, String soluong){
         try {
             int soluongSP=Integer.parseInt(soluong);
