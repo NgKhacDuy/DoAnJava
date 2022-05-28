@@ -300,7 +300,7 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
 
         jLabel2.setBackground(new java.awt.Color(255, 255, 255));
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel2.setText("CHI TIẾT SẢN PHẨM");
+        jLabel2.setText("CHI TIẾT HÓA ĐƠN");
 
         Panel_In_PDF.setBackground(new java.awt.Color(255, 255, 255));
 

@@ -173,6 +173,11 @@ public class KHACHHANG_GUI extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jtable.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jtableMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jtable);
         if (jtable.getColumnModel().getColumnCount() > 0) {
             jtable.getColumnModel().getColumn(0).setResizable(false);
@@ -398,6 +403,11 @@ public class KHACHHANG_GUI extends javax.swing.JInternalFrame {
                 evt.consume();
         
     }//GEN-LAST:event_txtTenKHKeyTyped
+
+    private void jtableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jtableMouseClicked
+        // TODO add your handling code here:
+        xulyClickTable();
+    }//GEN-LAST:event_jtableMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
