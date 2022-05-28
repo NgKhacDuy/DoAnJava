@@ -26,7 +26,7 @@ import javax.swing.table.DefaultTableModel;
  */
 public class CTHD_GUI extends javax.swing.JInternalFrame {
     CTHD_DAO cthd_dao = new CTHD_DAO();
-    SimpleDateFormat sdf = new SimpleDateFormat("YYYY-MM-dd",Locale.US);
+    SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
     CTHD_BUS cthd_bus = new CTHD_BUS();
     private MyConnect myconnect;
 
@@ -86,12 +86,12 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         }
     }
     private void xulySuaHD(){
-        boolean flag =cthd_bus.suaCthd(Integer.parseInt(txtMaHD.getText()),Integer.parseInt(txtMaSP.getText()), Integer.parseInt(txtSoLuong.getText()), Integer.parseInt(txtDonGia.getText()), Integer.parseInt(txtThanhTien.getText()), txtDate.getDate());
+        boolean flag =cthd_bus.suaCthd(Integer.parseInt(txtMaHD.getText()),Integer.parseInt(txtMaSP.getText()), Integer.parseInt(txtSoLuong.getText()), Integer.parseInt(txtDonGia.getText()), Integer.parseInt(txtThanhTien.getText()),sdf.format(txtDate.getDate()));
         if(flag)
             JOptionPane.showMessageDialog(rootPane, "Sửa thành công");
         else
             JOptionPane.showMessageDialog(rootPane, "Sửa thất bại");
-
+        loadDataLenTable();
     }
     private void xulyXoaHD(){
         int response= JOptionPane.showConfirmDialog(rootPane, "Bạn có chắc chắn muốn xóa ?","Confirm",JOptionPane.YES_NO_OPTION,JOptionPane.QUESTION_MESSAGE);
@@ -104,7 +104,7 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         }
     }
     private void xulythemHD(){
-        boolean flag=cthd_bus.themCthd(Integer.parseInt(txtMaSP.getText()), Integer.parseInt(txtSoLuong.getText()), Integer.parseInt(txtDonGia.getText()), Integer.parseInt(txtThanhTien.getText()), txtDate.getDate());
+        boolean flag=cthd_bus.themCthd(Integer.parseInt(txtMaSP.getText()), Integer.parseInt(txtSoLuong.getText()), Integer.parseInt(txtDonGia.getText()), Integer.parseInt(txtThanhTien.getText()), sdf.format(txtDate.getDate()));
         try{
             cthd_bus.doclistcthd();
             loadDataLenTable();
@@ -124,8 +124,7 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
             txtSoLuong.setText(soluong);
             txtDonGia.setText(dongia);
             txtThanhTien.setText(thanhtien);
-            SimpleDateFormat print = new SimpleDateFormat("yyyy-mm-dd",Locale.forLanguageTag(ngaylap));
-            txtDate.setDate(print.parse(ngaylap));
+            txtDate.setDate(sdf.parse(ngaylap));
         }
     }
     private void loadDataLenTable(){
@@ -258,6 +257,8 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         });
 
         txtDate.setDateFormatString("yyyy-MM-dd");
+        txtDate.setMaxSelectableDate(new java.util.Date(253370743276000L));
+        txtDate.setMinSelectableDate(new java.util.Date(-62135791124000L));
 
         jLabel1.setBackground(new java.awt.Color(255, 255, 255));
         jLabel1.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
@@ -496,6 +497,9 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         } catch (SQLException ex) {
             Logger.getLogger(CTHD_GUI.class.getName()).log(Level.SEVERE, null, ex);
         }
+        int dongia=Integer.parseInt(txtDonGia.getText());
+        int soluong=Integer.parseInt(txtSoLuong.getText());
+        txtThanhTien.setText(String.valueOf(dongia*soluong));
     }//GEN-LAST:event_txtMaSPKeyReleased
 
     private void txtThanhTienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtThanhTienActionPerformed
@@ -542,6 +546,7 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         txt_TimMaSP.setText("");
         txt_TimMaHD.setText("");
+        loadDataLenTable();
     }//GEN-LAST:event_btnHuyTimActionPerformed
 
     private void btn_TimActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_TimActionPerformed

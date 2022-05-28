@@ -17,9 +17,10 @@ public class CTHD_DTO {
     int soluong;
     int dongia;
     int thanhtien;
-    Date ngaylap;
+    String ngaylap;
 
-    public CTHD_DTO(int mahd, int masp, int soluong, int dongia, int thanhtien, Date ngaylap) {
+
+    public CTHD_DTO(int mahd, int masp, int soluong, int dongia, int thanhtien, String ngaylap) {
         this.mahd = mahd;
         this.masp = masp;
         this.soluong = soluong;
@@ -28,12 +29,7 @@ public class CTHD_DTO {
         this.ngaylap = ngaylap;
     }
 
-    public Date getNgaylap() {
-        return ngaylap;
-    }
-
-    public void setNgaylap(Date ngaylap) {
-        this.ngaylap = ngaylap;
+    public CTHD_DTO() {
     }
 
     public int getMahd() {
@@ -76,8 +72,15 @@ public class CTHD_DTO {
         this.thanhtien = thanhtien;
     }
 
-    public CTHD_DTO() {
+    public String getNgaylap() {
+        return ngaylap;
     }
+
+    public void setNgaylap(String ngaylap) {
+        this.ngaylap = ngaylap;
+    }
+
+    
 
     
 }

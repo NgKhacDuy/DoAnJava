@@ -6,17 +6,21 @@ package DAO;
 import DTO.CTHD_DTO;
 import java.sql.SQLException;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.util.ArrayList;
 import java.sql.ResultSet;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Locale;
 /**
  *
  * @author DELL
  */
 public class CTHD_DAO {
-    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd");
+    
+    SimpleDateFormat sdf=new SimpleDateFormat("yyyy-mm-dd",Locale.forLanguageTag("1999-12-20"));
     private MyConnect myconnect;
     public ArrayList<CTHD_DTO>getListCTHD(){
         try {
@@ -33,7 +37,7 @@ public class CTHD_DAO {
                 cthd.setSoluong(rs.getInt(3));
                 cthd.setDongia(rs.getInt(4));
                 cthd.setThanhtien(rs.getInt(5));
-                cthd.setNgaylap(rs.getDate(6));
+                cthd.setNgaylap(rs.getString(6));
                 dscthd.add(cthd);
             }
             return dscthd;
@@ -41,17 +45,17 @@ public class CTHD_DAO {
         }
         return null;
     }
-    public boolean themCTHD(CTHD_DTO cthd){
+    public boolean themCTHD(CTHD_DTO cthd) throws ParseException{
         try{
             myconnect= new MyConnect();
             Connection con = myconnect.getCon();
-            String sql = "INSERT INTO CTHOADON (MASP,SOLUONG,DONGIA,THANHTIEN) "+"VALUES(?,?,?,?)";
+            String sql = "INSERT INTO CTHOADON (MASP,SOLUONG,DONGIA,THANHTIEN,NGAYLAP) "+"VALUES(?,?,?,?,?)";
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, cthd.getMasp());
             pre.setInt(2, cthd.getSoluong());
             pre.setInt(3, cthd.getDongia());
             pre.setInt(4,cthd.getThanhtien());
-            pre.setDate(5, sdf.parse(new java.sql.Date(cthd.getNgaylap().getTime())));
+            pre.setString(5, cthd.getNgaylap());
             pre.execute();
             return true;
         } catch(SQLException e){}
@@ -85,8 +89,8 @@ public class CTHD_DAO {
             pre.setInt(2, cthd.getSoluong());
             pre.setInt(3, cthd.getDongia());
             pre.setInt(4, cthd.getThanhtien());
-            pre.setInt(5, cthd.getMahd());
-            pre.setDate(6, new java.sql.Date(cthd.getNgaylap().getTime()));
+            pre.setString(5, cthd.getNgaylap());
+            pre.setInt(6, cthd.getMahd());
             pre.execute();
             return true;
         } catch (Exception e) {

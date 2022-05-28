@@ -42,13 +42,13 @@ public class CTHD_BUS {
         ArrayList<CTHD_DTO>dscthd=new ArrayList<>();
         int masp=Integer.parseInt(ma);
         for(CTHD_DTO cthd:listcthd){
-            int maSP=cthd.getMahd();
+            int maSP=cthd.getMasp();
             if(maSP==masp)
                 dscthd.add(cthd);
         }
         return dscthd;
     }
-    public boolean themCthd(int masp, int soluong, int dongia, int thanhtien,Date ngaylap){
+    public boolean themCthd(int masp, int soluong, int dongia, int thanhtien,String ngaylap){
         try{
             CTHD_DTO cthd = new CTHD_DTO();
             cthd.setMasp(masp);
@@ -70,7 +70,7 @@ public class CTHD_BUS {
             return true;
         return false;
     }
-    public boolean suaCthd(int mahd, int masp, int soluong, int dongia, int thanhtien,Date ngaylap){
+    public boolean suaCthd(int mahd, int masp, int soluong, int dongia, int thanhtien,String ngaylap){
         try {
             CTHD_DTO cthd = new CTHD_DTO();
             cthd.setMahd(mahd);
