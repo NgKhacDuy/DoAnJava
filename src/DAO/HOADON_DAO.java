@@ -28,8 +28,9 @@ public class HOADON_DAO {
                 HOADON_DTO hd = new HOADON_DTO();
                 hd.setMahd(rs.getInt(1));
                 hd.setMakh(rs.getInt(2));
-                hd.setTongtien(rs.getInt(3));
-                hd.setManv(rs.getInt(4));
+                hd.setManv(rs.getInt(3));
+                hd.setGiamgia(rs.getDouble(4));
+                hd.setTongtien(rs.getDouble(5));
                 dshd.add(hd);
             }
             return dshd;
@@ -41,11 +42,13 @@ public class HOADON_DAO {
         try{
             myconnect= new MyConnect();
             Connection con = myconnect.getCon();
-            String sql = "INSERT INTO HOADON (MAKH,TONGTIEN,MANV) "+"VALUES(?,?,?)";
+            String sql = "INSERT INTO HOADON (MAHD,MAKH,MANV,GIAMGIA,TONGTIEN) "+"VALUES(?,?,?,?,?)";
             PreparedStatement pre = con.prepareStatement(sql);
-            pre.setInt(1, hd.getMakh());
-            pre.setInt(2, hd.getTongtien());
-            pre.setInt(3, hd.getTongtien());
+            pre.setInt(1, hd.getMahd());
+            pre.setInt(2, hd.getMakh());
+            pre.setInt(3, hd.getManv());
+            pre.setDouble(4, hd.getGiamgia());
+            pre.setDouble(5, hd.getTongtien());
             pre.execute();
             return true;
         } catch(SQLException e){}
@@ -69,19 +72,88 @@ public class HOADON_DAO {
             Connection con = myconnect.getCon();
             String sql = "UPDATE HOADON SET "
                     +"MAKH=?, "
-                    +"TONGTIEN=?, "
-                    +"MANV=? "
+                    +"MANV=?, "
+                    +"GIAMGIA=?, "
+                    +"TONGTIEN=? "
                     +"WHERE MAHD=?";
             PreparedStatement pre = con.prepareStatement(sql);
             pre.setInt(1, hd.getMakh());
-            pre.setInt(2, hd.getTongtien());
-            pre.setInt(3, hd.getManv());
-            pre.setInt(4, hd.getMahd());
+            pre.setInt(2, hd.getManv());
+            pre.setDouble(3, hd.getGiamgia());
+            pre.setDouble(4, hd.getTongtien());
+            pre.setInt(5, hd.getMahd());
             pre.execute();
             return true;
         } catch (Exception e) {
         }
         return false;
     }
+    public int getMaHD_CTHD(int ma) throws SQLException{
+        myconnect=new MyConnect();
+        Connection con = myconnect.getCon();
+        try{
+            String sql = "SELECT * FROM CTHOADON WHERE MAHD = "+ma;
+            PreparedStatement pre=con.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                return rs.getInt(1);
+        }
+        catch (Exception e) {
+        }
+        return 0;
+    }
+    public double getTongTien_CTHD(int ma) throws SQLException{
+        myconnect= new MyConnect();
+        Connection con = myconnect.getCon();   
+        try {
+            String sql="SELECT THANHTIEN FROM CTHOADON WHERE MAHD ="+ma;
+            PreparedStatement pre=con.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                return rs.getDouble(1);
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    public boolean getMaKH_KH(int ma) throws SQLException{
+        myconnect= new MyConnect();
+        Connection con = myconnect.getCon();  
+        try {
+            String sql="SELECT MAKH FROM KHACHHANG WHERE MAKH="+ma;
+            PreparedStatement pre=con.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+    public double checkGiamGia(int ma) throws SQLException{
+        myconnect= new MyConnect();
+        Connection con = myconnect.getCon(); 
+        try {
+            String sql="SELECT GIAMGIA FROM KHUYENMAI WHERE MAKH="+ma;
+            PreparedStatement pre=con.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                return rs.getDouble(1);
+        } catch (Exception e) {
+        }
+        return 0;
+    }
+    public boolean getMaNV_NV(int ma) throws SQLException{
+        myconnect= new MyConnect();
+        Connection con = myconnect.getCon();  
+        try {
+            String sql="SELECT MANV FROM NHANVIEN WHERE MANV="+ma;
+            PreparedStatement pre=con.prepareStatement(sql);
+            ResultSet rs=pre.executeQuery();
+            if(rs.next())
+                return true;
+        } catch (Exception e) {
+        }
+        return false;
+    }
+
     
 }

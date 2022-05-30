@@ -376,6 +376,8 @@ public class MAIN extends javax.swing.JFrame {
 
     private void btnKhuyenMaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhuyenMaiActionPerformed
         // TODO add your handling code here:
+        DesktopPane.removeAll();
+        DesktopPane.add(new KHUYENMAI_GUI()).setVisible(true);
     }//GEN-LAST:event_btnKhuyenMaiActionPerformed
 
     private void btnNCCActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNCCActionPerformed
@@ -388,6 +390,8 @@ public class MAIN extends javax.swing.JFrame {
 
     private void btnHoaDonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHoaDonActionPerformed
         // TODO add your handling code here:
+        DesktopPane.removeAll();
+        DesktopPane.add(new HoaDon_GUI()).setVisible(true);
     }//GEN-LAST:event_btnHoaDonActionPerformed
 
     private void btnSanPhamMouseEntered(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_btnSanPhamMouseEntered

@@ -8,6 +8,13 @@ import BUS.CTHD_BUS;
 import DAO.CTHD_DAO;
 import DAO.MyConnect;
 import DTO.CTHD_DTO;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.print.PageFormat;
+import java.awt.print.Printable;
+import java.awt.print.PrinterException;
+import java.awt.print.PrinterJob;
+import java.sql.Connection;
 import java.sql.SQLException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -17,8 +24,17 @@ import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
+import javax.swing.JPanel;
 import javax.swing.JTextField;
+import javax.swing.plaf.basic.BasicInternalFrameUI;
 import javax.swing.table.DefaultTableModel;
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.ChartFrame;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.CategoryPlot;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.chart.renderer.category.BarRenderer;
+import org.jfree.data.jdbc.JDBCCategoryDataset;
 
 /**
  *
@@ -36,6 +52,8 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
     public CTHD_GUI() {
         initComponents();
         loadDataLenTable();
+        BasicInternalFrameUI BI = (BasicInternalFrameUI)this.getUI();
+        BI.setNorthPane(null);
     }
     public boolean validateForm(){
         if(Integer.parseInt(txtMaSP.getText())==0|| Integer.parseInt(txtSoLuong.getText())==0|| Integer.parseInt(txtDonGia.getText())==0|| Integer.parseInt(txtThanhTien.getText())==0|| txtDate.getDate().equals("")){
@@ -125,6 +143,36 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
             txtDonGia.setText(dongia);
             txtThanhTien.setText(thanhtien);
             txtDate.setDate(sdf.parse(ngaylap));
+            label_PDF_MAHD.setText(mahd);
+            label_PDF_MASP.setText(masp);
+            label_PDF_DONGIA.setText(dongia);
+            label_PDF_SOLUONG.setText(soluong);
+            label_PDF_THANHTIEN.setText(thanhtien);
+            label_PDF_NGAYLAP.setText(ngaylap);
+        }
+    }
+    private void InPDF_Jpanel(JPanel panel){
+        PrinterJob printerjob =PrinterJob.getPrinterJob();
+        printerjob.setJobName("In");
+        printerjob.setPrintable(new Printable() {
+            @Override
+            public int print(Graphics graphics, PageFormat pageFormat, int pageIndex) throws PrinterException {
+                if(pageIndex>0)
+                    return Printable.NO_SUCH_PAGE;
+                Graphics2D g2d = (Graphics2D)graphics;
+                g2d.translate(pageFormat.getImageableX()*2, pageFormat.getImageableY()*2);
+                g2d.scale(0.5, 0.5);
+                panel.paint(g2d);
+                return Printable.PAGE_EXISTS;
+            }
+        });
+        boolean returningResult=printerjob.printDialog();
+        if(returningResult){
+            try {
+                printerjob.print();
+            } catch (Exception e) {
+                
+            }
         }
     }
     private void loadDataLenTable(){
@@ -170,12 +218,27 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         button2 = new Custom.Button();
         jLabel2 = new javax.swing.JLabel();
         Panel_In_PDF = new javax.swing.JPanel();
+        jLabel4 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
+        jLabel6 = new javax.swing.JLabel();
+        jLabel7 = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel9 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        label_PDF_MAHD = new javax.swing.JLabel();
+        label_PDF_MASP = new javax.swing.JLabel();
+        label_PDF_DONGIA = new javax.swing.JLabel();
+        label_PDF_SOLUONG = new javax.swing.JLabel();
+        label_PDF_THANHTIEN = new javax.swing.JLabel();
+        label_PDF_NGAYLAP = new javax.swing.JLabel();
         panel1 = new Custom.Panel();
         jLabel3 = new javax.swing.JLabel();
         txt_TimMaHD = new Custom.TextField();
         txt_TimMaSP = new Custom.TextField();
         btn_Tim = new Custom.Button();
         btnHuyTim = new Custom.Button();
+        btn_IN_PDF = new Custom.Button();
+        btnTHongKe = new Custom.Button();
 
         setBackground(new java.awt.Color(255, 255, 255));
 
@@ -303,16 +366,85 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
         jLabel2.setText("CHI TIẾT HÓA ĐƠN");
 
         Panel_In_PDF.setBackground(new java.awt.Color(255, 255, 255));
+        Panel_In_PDF.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+
+        jLabel4.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        jLabel4.setText("CHI TIẾT HÓA ĐƠN");
+
+        jLabel5.setText("MÃ HÓA ĐƠN");
+
+        jLabel6.setText("MÃ SẢN PHẨM");
+
+        jLabel7.setText("ĐƠN GIÁ");
+
+        jLabel8.setText("SỐ LƯỢNG");
+
+        jLabel9.setText("THÀNH TIỀN");
+
+        jLabel10.setText("NGÀY LẬP");
 
         javax.swing.GroupLayout Panel_In_PDFLayout = new javax.swing.GroupLayout(Panel_In_PDF);
         Panel_In_PDF.setLayout(Panel_In_PDFLayout);
         Panel_In_PDFLayout.setHorizontalGroup(
             Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 481, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_In_PDFLayout.createSequentialGroup()
+                .addContainerGap()
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(Panel_In_PDFLayout.createSequentialGroup()
+                        .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel6)
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, Panel_In_PDFLayout.createSequentialGroup()
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 97, Short.MAX_VALUE)
+                                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(Panel_In_PDFLayout.createSequentialGroup()
+                                .addGap(13, 13, 13)
+                                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(label_PDF_NGAYLAP, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_PDF_THANHTIEN, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_PDF_SOLUONG, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_PDF_DONGIA, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(label_PDF_MASP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))))
+                    .addGroup(Panel_In_PDFLayout.createSequentialGroup()
+                        .addComponent(jLabel5)
+                        .addGap(18, 18, 18)
+                        .addComponent(label_PDF_MAHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                .addGap(172, 172, 172))
         );
         Panel_In_PDFLayout.setVerticalGroup(
             Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
+            .addGroup(Panel_In_PDFLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 26, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(label_PDF_MAHD))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(label_PDF_MASP))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel7)
+                    .addComponent(label_PDF_DONGIA))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel8)
+                    .addComponent(label_PDF_SOLUONG))
+                .addGap(18, 18, 18)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel9)
+                    .addComponent(label_PDF_THANHTIEN))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(Panel_In_PDFLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel10)
+                    .addComponent(label_PDF_NGAYLAP))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         panel1.setBackground(new java.awt.Color(153, 255, 255));
@@ -374,6 +506,20 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
                 .addContainerGap(15, Short.MAX_VALUE))
         );
 
+        btn_IN_PDF.setText("IN");
+        btn_IN_PDF.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btn_IN_PDFActionPerformed(evt);
+            }
+        });
+
+        btnTHongKe.setText("BẢNG THỐNG KÊ");
+        btnTHongKe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTHongKeActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -386,47 +532,58 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
-                                            .addComponent(txtMaHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtMaSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                            .addComponent(RB_Them))
-                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addContainerGap()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGroup(layout.createSequentialGroup()
-                                                .addGap(29, 29, 29)
+                                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                                    .addComponent(button1, javax.swing.GroupLayout.DEFAULT_SIZE, 73, Short.MAX_VALUE)
+                                                    .addComponent(txtMaHD, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(txtMaSP, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(txtSoLuong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addComponent(RB_Them))
                                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                    .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                                        .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
-                                                        .addComponent(txtThanhTien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                                        .addComponent(txtDonGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                                            .addGroup(layout.createSequentialGroup()
-                                                .addGap(18, 18, 18)
-                                                .addComponent(RB_Sua)
-                                                .addGap(18, 18, 18)
-                                                .addComponent(RB_Xoa)))))
-                                .addGap(19, 19, 19)
-                                .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(354, 354, 354)
-                                .addComponent(jLabel2)))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(29, 29, 29)
+                                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                            .addComponent(txtDate, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                                                .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 75, Short.MAX_VALUE)
+                                                                .addComponent(txtThanhTien, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                                                .addComponent(txtDonGia, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                                                    .addGroup(layout.createSequentialGroup()
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(RB_Sua)
+                                                        .addGap(18, 18, 18)
+                                                        .addComponent(RB_Xoa)))))
+                                        .addGap(19, 19, 19)
+                                        .addComponent(panel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGap(354, 354, 354)
+                                        .addComponent(jLabel2)))
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addGap(0, 0, Short.MAX_VALUE)
+                                .addComponent(btnTHongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(btn_IN_PDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addComponent(Panel_In_PDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(32, 32, 32)))
+                        .addGap(31, 31, 31)))
                 .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addContainerGap()
+                        .addComponent(Panel_In_PDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -456,11 +613,11 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(button1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(button2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(38, 38, 38)
-                        .addComponent(Panel_In_PDF, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addGap(18, 18, 18)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 45, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(btn_IN_PDF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnTHongKe, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(21, 21, 21)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -559,6 +716,31 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
             timTheoMahd();
     }//GEN-LAST:event_btn_TimActionPerformed
 
+    private void btn_IN_PDFActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_IN_PDFActionPerformed
+        // TODO add your handling code here:
+        InPDF_Jpanel(Panel_In_PDF);
+    }//GEN-LAST:event_btn_IN_PDFActionPerformed
+
+    private void btnTHongKeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTHongKeActionPerformed
+        try {
+            // TODO add your handling code here:
+            myconnect=new MyConnect();
+            Connection con = myconnect.getCon();
+            String sql="SELECT NGAYLAP,THANHTIEN FROM CTHOADON";
+            JDBCCategoryDataset dataset=new JDBCCategoryDataset(con,sql);
+            JFreeChart chart =ChartFactory.createBarChart("Thống kê chi tiết hóa đơn", "Ngày lập", "Số tiền thu được", dataset,PlotOrientation.VERTICAL,false,true,true);
+            BarRenderer renderer=null;
+            CategoryPlot plot=null;
+            renderer=new BarRenderer();
+            ChartFrame frame=new ChartFrame("Thống kê", chart);
+            frame.setVisible(true);
+            frame.setSize(800,600);
+        } catch (SQLException ex) {
+            Logger.getLogger(CTHD_GUI.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+    }//GEN-LAST:event_btnTHongKeActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JPanel Panel_In_PDF;
@@ -566,15 +748,30 @@ public class CTHD_GUI extends javax.swing.JInternalFrame {
     private javax.swing.JRadioButton RB_Them;
     private javax.swing.JRadioButton RB_Xoa;
     private Custom.Button btnHuyTim;
+    private Custom.Button btnTHongKe;
+    private Custom.Button btn_IN_PDF;
     private Custom.Button btn_Tim;
     private Custom.Button button1;
     private Custom.Button button2;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel label_PDF_DONGIA;
+    private javax.swing.JLabel label_PDF_MAHD;
+    private javax.swing.JLabel label_PDF_MASP;
+    private javax.swing.JLabel label_PDF_NGAYLAP;
+    private javax.swing.JLabel label_PDF_SOLUONG;
+    private javax.swing.JLabel label_PDF_THANHTIEN;
     private Custom.Panel panel1;
     private javax.swing.JTable table;
     private com.toedter.calendar.JDateChooser txtDate;

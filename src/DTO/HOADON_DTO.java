@@ -11,17 +11,19 @@ package DTO;
 public class HOADON_DTO {
     int mahd;
     int makh;
-    int tongtien;
+    double tongtien;
     int manv;
+    double giamgia;
 
-    public HOADON_DTO(int mahd, int makh, int tongtien, int manv) {
+    public HOADON_DTO() {
+    }
+
+    public HOADON_DTO(int mahd, int makh, double tongtien, int manv, double giamgia) {
         this.mahd = mahd;
         this.makh = makh;
         this.tongtien = tongtien;
         this.manv = manv;
-    }
-
-    public HOADON_DTO() {
+        this.giamgia = giamgia;
     }
 
     public int getMahd() {
@@ -40,11 +42,11 @@ public class HOADON_DTO {
         this.makh = makh;
     }
 
-    public int getTongtien() {
+    public double getTongtien() {
         return tongtien;
     }
 
-    public void setTongtien(int tongtien) {
+    public void setTongtien(double tongtien) {
         this.tongtien = tongtien;
     }
 
@@ -55,4 +57,15 @@ public class HOADON_DTO {
     public void setManv(int manv) {
         this.manv = manv;
     }
+
+    public double getGiamgia() {
+        return giamgia;
+    }
+
+    public void setGiamgia(double giamgia) {
+        this.giamgia = giamgia;
+    }
+
+    
+    
 }

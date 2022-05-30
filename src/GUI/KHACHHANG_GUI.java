@@ -398,9 +398,7 @@ public class KHACHHANG_GUI extends javax.swing.JInternalFrame {
 
     private void txtTenKHKeyTyped(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_txtTenKHKeyTyped
         // TODO add your handling code here:
-        char c = evt.getKeyChar();
-            if(!((c==KeyEvent.VK_L)||(c==KeyEvent.VK_S)||(c==KeyEvent.VK_M)||((c==KeyEvent.VK_BACK_SPACE)||c==KeyEvent.VK_DELETE)))
-                evt.consume();
+        
         
     }//GEN-LAST:event_txtTenKHKeyTyped
 
